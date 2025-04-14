@@ -3,10 +3,10 @@ title: Admin panel
 description: Learn to use the admin panel.
 toc_max_heading_level: 5
 tags:
-- admin panel
-- profile
-- light mode
-- dark mode
+  - admin panel
+  - profile
+  - light mode
+  - dark mode
 ---
 
 # Administration panel
@@ -153,3 +153,26 @@ sources={{
     dark: '/img/assets/getting-started/login-page_DARK.png',
   }}
 />
+
+### User menu
+
+The user menu is located in the bottom left corner of the admin panel. It displays your account name or initials. Clicking on it opens a dropdown menu with the following options:
+
+- **Profile**: Access your user profile settings
+- **Logout**: Log out of the admin panel
+
+<ThemedImage
+alt="User menu in the Admin Panel"
+sources={{
+    light: '/img/assets/getting-started/user-menu.png',
+    dark: '/img/assets/getting-started/user-menu_DARK.png',
+  }}
+/>
+
+When you click on your profile, you'll see detailed information including:
+
+- Your full name
+- Your email address
+- Your role(s) within the Strapi application
+
+You can also access additional options to manage your account and preferences from this menu.
