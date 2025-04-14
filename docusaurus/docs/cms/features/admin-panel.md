@@ -3,10 +3,10 @@ title: Admin panel
 description: Learn to use the admin panel.
 toc_max_heading_level: 5
 tags:
-- admin panel
-- profile
-- light mode
-- dark mode
+  - admin panel
+  - profile
+  - light mode
+  - dark mode
 ---
 
 # Administration panel
@@ -129,6 +129,35 @@ Both logos can also be customized programmatically via the Strapi application's 
     dark: '/img/assets/settings/settings_custom-logo_DARK.png',
   }}
 />
+
+### Managing admin seats
+
+**Path to configure the admin panel:** <Icon name="gear-six" /> *Settings > Global settings > Overview*
+
+The Admin Seats section displays information about the number of admin seats in use and the total number of permitted seats. This information is crucial for managing your Strapi application's user capacity.
+
+<ThemedImage
+  alt="Admin Seats Information"
+  sources={{
+    light: '/img/assets/getting-started/admin-seats-info.png',
+    dark: '/img/assets/getting-started/admin-seats-info_DARK.png',
+  }}
+/>
+
+The Admin Seats section shows:
+
+- The current number of seats in use
+- The total number of permitted seats
+- A warning icon if you're at or over the seat limit
+
+If you're using all available seats or have exceeded the limit, you'll see options to manage your seats:
+
+- For Self-Hosted (Gold) users: A "Contact sales" link to request additional seats
+- For Cloud users: A "Manage seats" link to adjust your seat allocation
+
+:::note
+If you're over the seat limit, you won't be able to invite new users until you either increase your seat allocation or remove existing users.
+:::
 
 ## Usage
 
