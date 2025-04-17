@@ -1,0 +1,10 @@
+{
+  "gitHubApp": {
+    "approvalWorkflow": true,
+    "userDocsWorkflows": [
+      "generateUserDocs"
+    ],
+    "issues": true
+  },
+  "aiProvider": "google"
+}
