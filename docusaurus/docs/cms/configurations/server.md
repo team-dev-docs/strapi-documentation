@@ -60,6 +60,10 @@ The `./config/server.js` minimal configuration requires the `host` and `port` pa
 [Environmental configurations](/cms/configurations/environment.md) (i.e. using the `env()` helper) do not need to contain all the values so long as they exist in the default `./config/server.js`.
 :::
 
+:::info
+In development environments, when using localhost addresses (`127.0.0.1`, `0.0.0.0`, `::1`, or `::`), Strapi automatically generates URLs with `localhost` as the hostname.
+:::
+
 The default configuration created with any new project should at least include the following:
 <Tabs>
 <TabItem value="minimal configuration" label="Minimal configuration">
