@@ -11,6 +11,20 @@ tags:
   - host
   - port
 ---
+```markdown
+---
+title: Server configuration
+sidebar_label: Server
+description: Strapi offers a single entry point file for its server configuration.
+displayed_sidebar: cmsSidebar
+tags:
+  - app keys
+  - base configuration
+  - configuration
+  - cron job
+  - host
+  - port
+---
 
 # Server configuration
 
@@ -172,3 +186,21 @@ export default ({ env }) => ({
 
 </TabItem>
 </Tabs>
+
+## Hostname Configuration in Development
+
+When running Strapi in a development environment, the resolved hostname will default to `localhost` if the configured `host` in `config/server.js` resolves to a local IP address (`127.0.0.1`, `0.0.0.0`, `::1`, `::`). This ensures that the server URL is correctly constructed for local development.
+
+For example, if your `config/server.js` looks like this:
+
+```js
+module.exports = ({ env }) => ({
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  app: {
+    keys: env.array('APP_KEYS'),
+  },
+});
+```
+
+Strapi will now use `http://localhost:1337` as the base URL for the server in development.
