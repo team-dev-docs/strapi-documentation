@@ -60,6 +60,10 @@ The `./config/server.js` minimal configuration requires the `host` and `port` pa
 [Environmental configurations](/cms/configurations/environment.md) (i.e. using the `env()` helper) do not need to contain all the values so long as they exist in the default `./config/server.js`.
 :::
 
+:::info
+In development mode, when the host is set to a loopback address (`127.0.0.1`, `0.0.0.0`, `::1`, or `::`), Strapi will replace it with `localhost` when generating absolute URLs. This is particularly useful for IPv6 loopback addresses, which would otherwise be formatted with square brackets (e.g., `http://[::1]:1337`).
+:::
+
 The default configuration created with any new project should at least include the following:
 <Tabs>
 <TabItem value="minimal configuration" label="Minimal configuration">
