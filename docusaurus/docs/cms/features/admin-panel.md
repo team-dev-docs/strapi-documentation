@@ -3,6 +3,17 @@ title: Admin panel
 description: Learn to use the admin panel.
 toc_max_heading_level: 5
 tags:
+  - admin panel
+  - profile
+  - light mode
+  - dark mode
+---
+```markdown
+---
+title: Admin panel
+description: Learn to use the admin panel.
+toc_max_heading_level: 5
+tags:
 - admin panel
 - profile
 - light mode
@@ -153,3 +164,17 @@ sources={{
     dark: '/img/assets/getting-started/login-page_DARK.png',
   }}
 />
+
+## Admin Panel Widgets
+
+The admin panel's homepage includes widgets that display information such as recently edited and published entries. These widgets may display different states based on the data available and the user's permissions.
+
+*   **Loading State:** A loader is displayed while the widget fetches data.
+
+*   **Error State:** An error message is shown if the widget fails to load data.
+
+*   **No Data State:** A message indicates that no data is available if the widget has no content to display.
+
+*   **No Permissions State:** A message indicates that the user does not have the necessary permissions to view the widget. This state ensures that sensitive information is not exposed to unauthorized users.
+
+These states are handled using the `Widget` component, which provides a consistent way to display these different states in the admin panel.  Ensure your user roles and permissions are appropriately configured to allow users to see the data they need. If a user is seeing a "No Permissions" message, verify their role has the correct permissions set in the RBAC settings.
