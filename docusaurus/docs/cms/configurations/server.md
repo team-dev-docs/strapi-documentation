@@ -172,3 +172,7 @@ export default ({ env }) => ({
 
 </TabItem>
 </Tabs>
+
+:::note
+In development environments, Strapi now also supports the following localhost IP addresses: `::1` and `::`.
+:::
