@@ -11,6 +11,20 @@ tags:
   - host
   - port
 ---
+```md
+---
+title: Server configuration
+sidebar_label: Server
+description: Strapi offers a single entry point file for its server configuration.
+displayed_sidebar: cmsSidebar
+tags:
+  - app keys
+  - base configuration
+  - configuration
+  - cron job
+  - host
+  - port
+---
 
 # Server configuration
 
@@ -172,3 +186,18 @@ export default ({ env }) => ({
 
 </TabItem>
 </Tabs>
+
+:::tip Important considerations for Development environments
+
+When running Strapi in a development environment (`NODE_ENV=development`), the server configuration requires special attention, particularly concerning the `host` parameter. Due to changes in how Strapi constructs URLs, especially for the admin panel, the following points should be considered:
+
+- **`host: 0.0.0.0`**: Setting the host to `0.0.0.0` is crucial for allowing external access to your Strapi application from other devices on your network. However, be aware that in some cases, this might not be sufficient for the admin panel to function correctly due to URL construction logic.
+
+- **Accessing the Admin Panel**: If you encounter issues accessing the admin panel when using `0.0.0.0`, especially seeing a blank screen or errors related to the URL, try accessing the admin panel using `http://localhost:<port>/admin`.
+
+- **IPv6 Addresses**: If your machine uses IPv6, and you set your host to an IPv6 address (e.g., `::1`), ensure your system correctly resolves this address. You might need to access your Strapi application using `http://[::1]:<port>/admin`.
+
+- **Explicit Host Configuration**: For a more robust configuration in development, consider explicitly setting the `host` to `localhost` and verifying that your system resolves `localhost` correctly. This ensures that both the server and admin panel URLs are constructed correctly.
+
+These considerations are important because Strapi dynamically generates URLs for the admin panel and other services based on the `host` and `port` configurations. Incorrectly configured hosts can lead to URL mismatches and prevent the admin panel from loading correctly.
+:::

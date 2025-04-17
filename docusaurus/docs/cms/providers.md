@@ -2,6 +2,14 @@
 title: Providers
 description: Install and use providers to extend the functionality of available plugins.
 tags:
+  - environment
+  - providers
+---
+```markdown
+---
+title: Providers
+description: Install and use providers to extend the functionality of available plugins.
+tags:
 - environment
 - providers
 
@@ -489,3 +497,4 @@ export = {
 </Tabs>
 
 <FeedbackPlaceholder />
+```

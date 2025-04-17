@@ -1,5 +1,18 @@
 ---
 title: Preview
+description: >-
+  With the Preview feature, you can preview your front-end directly from the
+  Content Manager
+displayedSidebar: userSidebar
+toc_max_heading_level: 4
+tags:
+  - content manager
+  - preview
+  - features
+---
+```markdown
+---
+title: Preview
 description: With the Preview feature, you can preview your front-end directly from the Content Manager
 displayedSidebar: userSidebar
 toc_max_heading_level: 4
@@ -597,3 +610,4 @@ Additionally, you can:
 :::note
 In the Edit view of the Content Manager, the Open preview button will be disabled if you have unsaved changes. Save your latest changes and you should be able to preview content again.
 :::
+```

@@ -3,6 +3,18 @@ title: Upload plugin
 displayed_sidebar: cmsSidebar
 description: Upload any kind of file on your server or external providers.
 tags:
+  - localServer
+  - provider
+  - plugins
+  - Upload plugin
+  - REST API
+---
+```markdown
+---
+title: Upload plugin
+displayed_sidebar: cmsSidebar
+description: Upload any kind of file on your server or external providers.
+tags:
 - localServer
 - provider
 - plugins
@@ -265,11 +277,7 @@ export default ({ env }) => ({
   upload: {
     config: {
       breakpoints: {
-        xlarge: 1920,
-        large: 1000,
-        medium: 750,
-        small: 500,
-        xsmall: 64
+        xlarge: 1920,\n        large: 1000,\n        medium: 750,\n        small: 500,\n        xsmall: 64
       },
     },
   },
@@ -354,10 +362,7 @@ The following parameters are accepted:
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    await fetch('/api/upload', {
-      method: 'post',
-      body: new FormData(e.target)
-    });
+    await fetch('/api/upload', {\n      method: 'post',\n      body: new FormData(e.target)\n    });
   });
 </script>
 ```
@@ -375,10 +380,7 @@ const form = new FormData();
 
 form.append('files', file, "1.png");
 
-const response = await fetch('http://localhost:1337/api/upload', {
-  method: 'post',
-  body: form,
-});
+const response = await fetch('http://localhost:1337/api/upload', {\n  method: 'post',\n  body: form,\n});
 
 ```
 
@@ -442,10 +444,7 @@ The corresponding code is be:
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    await fetch('/api/upload', {
-      method: 'post',
-      body: new FormData(e.target)
-    });
+    await fetch('/api/upload', {\n      method: 'post',\n      body: new FormData(e.target)\n    });
   });
 </script>
 ```
@@ -529,9 +528,6 @@ const form = new FormData();
 
 form.append('fileInfo', JSON.stringify(newFileData));
 
-const response = await fetch(`http://localhost:1337/api/upload?id=${fileId}`, {
-  method: 'post',
-  body: form,
-});
+const response = await fetch(`http://localhost:1337/api/upload?id=${fileId}`, {\n  method: 'post',\n  body: form,\n});
 
 ```

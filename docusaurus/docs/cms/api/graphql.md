@@ -2,6 +2,23 @@
 title: GraphQL API
 displayed_sidebar: cmsSidebar
 tags:
+  - API
+  - Content API
+  - documentId
+  - filters
+  - GraphQL
+  - mutation
+  - pagination
+  - pagination by offset
+  - pagination by page
+  - plural API ID
+  - sort
+---
+```markdown
+---
+title: GraphQL API
+displayed_sidebar: cmsSidebar
+tags:
 - API
 - Content API
 - documentId

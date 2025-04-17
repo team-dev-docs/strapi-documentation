@@ -1,5 +1,18 @@
 ---
 title: Users & Permissions
+description: >-
+  Learn to use the Users & Permissions and API tokens features to manage
+  end-users.
+toc_max_heading_level: 5
+tags:
+  - admin panel
+  - users & permissions
+  - api tokens
+  - features
+---
+```markdown
+---
+title: Users & Permissions
 description: Learn to use the Users & Permissions and API tokens features to manage end-users.
 toc_max_heading_level: 5
 tags:
@@ -246,7 +259,7 @@ Setting JWT expiry for more than 30 days is not recommended due to security conc
 
 ### Registration configuration
 
-If you have added any additional fields in your User **model** <Annotation>Models, also called content-types in Strapi, define a representation of the content structure.<br/>Users are a special type of built-in content-type found in any new Strapi application. You can customize the Users model, adding more fields for instance, like any other models.<br/>For more information, please refer to the [models](/cms/backend-customization/models) documentation.</Annotation> that need to be accepted on registration, you need to added them to the list of allowed fields in the `config.register` object of [the `/config/plugins` file](/cms/configurations/plugins), otherwise they will not be accepted.
+If you have added any additional fields in your User **model** <Annotation>Models, also called content-types in Strapi, define a representation of the content structure.<br/>Users are a special type of built-in content-type found in any new Strapi application. You can customize the Users model, adding more fields for instance, like any other models.<br/>For more information, please refer to the [models](/cms/backend-customization/models) documentation.</Annotation> that need to be accepted on registration, you need to added them to the list of allowed fields in the `config.register` object of [the `/config/plugins` file](/cms/configurations/plugins), otherwise they will not be accepted. By default, the `register.allowedFields` array is empty, meaning no additional fields are accepted unless explicitly configured.
 
 The following example shows how to ensure a field called "nickname" is accepted by the API on user registration:
 
@@ -348,7 +361,7 @@ module.exports = {
 
 <TabItem value="typescript" label="TypeScript">
 
-```ts title="/extensions/users-permissions/config/jwt.ts"
+```js title="/extensions/users-permissions/config/jwt.ts"
 
 export default {
   jwtSecret: process.env.SOME_ENV_VAR,
@@ -583,4 +596,5 @@ create: async ctx => {
   // Send 201 `created`
   ctx.created(data);
 };
+```
 ```
