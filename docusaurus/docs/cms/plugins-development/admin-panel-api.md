@@ -4,20 +4,20 @@ pagination_prev: cms/plugins-development/plugin-structure
 pagination_next: cms/plugins-development/content-manager-apis
 toc_max_heading_level: 4
 tags:
-- admin panel
-- plugin APIs
-- asynchronous function
-- bootstrap function
-- hooks API
-- Injection Zones API
-- lifecycle function
-- menu
-- settings
-- plugins
-- plugins development
-- register function
-- reducers API
-- redux
+  - admin panel
+  - plugin APIs
+  - asynchronous function
+  - bootstrap function
+  - hooks API
+  - Injection Zones API
+  - lifecycle function
+  - menu
+  - settings
+  - plugins
+  - plugins development
+  - register function
+  - reducers API
+  - redux
 ---
 
 # Admin Panel API for plugins
@@ -66,6 +66,7 @@ Within the register function, a plugin can:
 * [create a new settings section](#createsettingsection)
 * define [injection zones](#injection-zones-api)
 * [add reducers](#reducers-api)
+* [register widgets](#widgets-api)
 
 #### registerPlugin()
 
@@ -198,6 +199,7 @@ The Admin Panel API allows a plugin to take advantage of several small APIs to p
 | Declare an injection zone                | [Injection Zones API](#injection-zones-api) | [`registerPlugin()`](#registerplugin)             | [`register()`](#register)   |
 | Add a reducer                            | [Reducers API](#reducers-api)                                       | [`addReducers()`](#reducers-api)                      | [`register()`](#register)   |
 | Create a hook                          | [Hooks API](#hooks-api)                 | [`createHook()`](#hooks-api)                    | [`register()`](#register)   |
+| Register widgets                         | [Widgets API](#widgets-api)             | [`register()`](#widgets-api)                     | [`register()`](#register)   |
 | Add a single link to a settings section  | [Settings API](#settings-api)           | [`addSettingsLink()`](#addsettingslink)             | [`bootstrap()`](#bootstrap) |
 | Add multiple links to a settings section | [Settings API](#settings-api)           | [`addSettingsLinks()`](#addsettingslinks)           | [`bootstrap()`](#bootstrap) |
 | Inject a Component in an injection zone  | [Injection Zones API](#injection-zones-api) | [`injectComponent()`](#injection-zones-api)           | [`bootstrap()`](#register)  |
@@ -775,4 +777,124 @@ interface LayoutSettings extends Contracts.ContentTypes.Settings {
 
 :::note
 `EditViewLayout` and `ListViewLayout` are parts of the `useDocumentLayout` hook (see <ExternalLink to="https://github.com/strapi/strapi/blob/develop/packages/core/content-manager/admin/src/hooks/useDocumentLayout.ts" text="source code"/>).
+:::
+
+### Widgets API
+
+The Widgets API allows plugins to register custom widget components that can be displayed on the dashboard or other areas of the admin panel. These widgets can display various types of data, provide quick actions, or serve as informative panels.
+
+To register a widget, use the `app.widgets.register()` method during the [register](#register) lifecycle.
+
+**Example:**
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```jsx title="my-plugin/admin/src/index.js"
+import WidgetIcon from './components/WidgetIcon';
+
+export default {
+  register(app) {
+    app.widgets.register({
+      // Unique identifier for the widget
+      id: 'my-widget',
+      // Icon to display
+      icon: WidgetIcon,
+      // Widget title
+      title: {
+        id: 'my-plugin.widget.title',
+        defaultMessage: 'My Widget',
+      },
+      // Optional link displayed on the widget
+      link: {
+        label: {
+          id: 'my-plugin.widget.link.label',
+          defaultMessage: 'View Details',
+        },
+        href: '/plugins/my-plugin/details',
+      },
+      // The widget component (loaded asynchronously)
+      component: async () => {
+        const component = await import('./components/MyWidget');
+        return component;
+      },
+      // Optional permissions to restrict widget visibility
+      permissions: [],
+    });
+    
+    // Or register multiple widgets at once
+    /*
+    app.widgets.register([
+      {
+        id: 'widget-1',
+        // ...
+      },
+      {
+        id: 'widget-2',
+        // ...
+      }
+    ]);
+    */
+  }
+};
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```tsx title="my-plugin/admin/src/index.ts"
+import WidgetIcon from './components/WidgetIcon';
+import type { StrapiApp } from '@strapi/admin/strapi-admin';
+
+export default {
+  register(app: StrapiApp) {
+    app.widgets.register({
+      // Unique identifier for the widget
+      id: 'my-widget',
+      // Icon to display
+      icon: WidgetIcon,
+      // Widget title
+      title: {
+        id: 'my-plugin.widget.title',
+        defaultMessage: 'My Widget',
+      },
+      // Optional link displayed on the widget
+      link: {
+        label: {
+          id: 'my-plugin.widget.link.label',
+          defaultMessage: 'View Details',
+        },
+        href: '/plugins/my-plugin/details',
+      },
+      // The widget component (loaded asynchronously)
+      component: async () => {
+        const component = await import('./components/MyWidget');
+        return component;
+      },
+      // Optional permissions to restrict widget visibility
+      permissions: [],
+    });
+  }
+};
+```
+
+</TabItem>
+</Tabs>
+
+#### Widget Configuration
+
+The `register()` method accepts the following parameters:
+
+| Parameter     | Type                     | Description                                                          | Required |
+| ------------- | ------------------------ | -------------------------------------------------------------------- | -------- |
+| `id`          | String                   | Unique identifier for the widget                                      | Yes      |
+| `icon`        | React.ComponentType      | Icon component displayed in the widget                               | Yes      |
+| `title`       | MessageDescriptor        | Title of the widget with internationalization support                 | Yes      |
+| `component`   | Async Function           | Async function that returns the widget component                     | Yes      |
+| `link`        | Object                   | Optional link configuration with `label` and `href` properties        | No       |
+| `permissions` | Array of Permission      | Optional permissions to control widget visibility                     | No       |
+| `pluginId`    | String                   | Plugin ID if the widget is part of a plugin (automatically handled)   | No       |
+
+:::note
+When registering a widget, an internal UID is generated based on the plugin ID (if provided) or marked as a global widget. This ensures widgets have unique identifiers throughout the system.
 :::
