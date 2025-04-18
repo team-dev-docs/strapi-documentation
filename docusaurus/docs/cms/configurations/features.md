@@ -4,10 +4,10 @@ sidebar_label: Features
 description: Enable experimental Strapi features
 displayed_sidebar: cmsSidebar
 tags:
-- additional configuration
-- configuration
-- features configuration
-- future flag
+  - additional configuration
+  - configuration
+  - features configuration
+  - future flag
 ---
 
 # Features configuration
@@ -107,7 +107,11 @@ Developers can use the following APIs to interact with future flags:
 
 ## Available future flags
 
-There are currently no available future flags. This section will be updated once new experimental features are available for testing.
+The following future flags are currently available and can be used in the `future` object of the `config/features` configuration file:
+
+| Property name     | Related feature                              | Suggested environment variable name       |
+| ----------------- | -------------------------------------------- | ----------------------------------------- |
+| `unstableWidgetsApi` | Experimental Widgets API for the admin panel | `STRAPI_FUTURE_UNSTABLE_WIDGETS_API` |
 
 <!-- The following future flags are currently available and can be used in the `future` object of the `config/features` configuration file:
 
