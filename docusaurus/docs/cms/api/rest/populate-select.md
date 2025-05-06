@@ -5,16 +5,15 @@ sidebarDepth: 3
 sidebar_label: Populate & Select
 displayed_sidebar: cmsSidebar
 tags:
-- API
-- Content API
-- Combining operators
-- find
-- populate
-- REST API
-- select
-- qs library
+  - API
+  - Content API
+  - Combining operators
+  - find
+  - populate
+  - REST API
+  - select
+  - qs library
 ---
-
 import QsIntroFull from '/docs/snippets/qs-intro-full.md'
 import QsForQueryTitle from '/docs/snippets/qs-for-query-title.md'
 import QsForQueryBody from '/docs/snippets/qs-for-query-body.md'
@@ -24,7 +23,7 @@ import QsForQueryBody from '/docs/snippets/qs-for-query-body.md'
 The [REST API](/cms/api/rest) by default does not populate any relations, media fields, components, or dynamic zones. Use the [`populate` parameter](#population) to populate specific fields and the [`select` parameter](#field-selection) to return only specific fields with the query results.
 
 :::tip
-<QsIntroFull />
+
 :::
 
 :::callout 🏗 Work-in-progress
@@ -51,15 +50,15 @@ Queries can accept a `fields` parameter to select only some fields. By default, 
 Field selection does not work on relational, media, component, or dynamic zone fields. To populate these fields, use the [`populate` parameter](#population).
 :::
 
-<ApiCall noSideBySide>
-<Request title="Example request: Return only name and description fields">
+
+
 
 `GET /api/restaurants?fields[0]=name&fields[1]=description`
 
-<details>
-<summary><QsForQueryTitle/></summary>
 
-<QsForQueryBody />
+
+
+
 
 ```js
 const qs = require('qs');
@@ -75,10 +74,10 @@ const query = qs.stringify(
 await request(`/api/users?${query}`);
 ```
 
-</details>
-</Request>
 
-<Response title="Example response">
+
+
+
 
 ```json
 {
@@ -112,8 +111,8 @@ await request(`/api/users?${query}`);
 }
 ```
 
-</Response>
-</ApiCall>
+
+
 
 ## Population
 
@@ -143,8 +142,8 @@ The following table sums up possible populate use cases and their associated par
 | Use case  | Example parameter syntax | Detailed explanations to read |
 |-----------| ---------------|-----------------------|
 | Populate everything, 1 level deep, including media fields, relations, components, and dynamic zones | `populate=*`| [Populate all relations and fields, 1 level deep](/cms/api/rest/guides/understanding-populate#populate-all-relations-and-fields-1-level-deep) |
-| Populate one relation,<br/>1 level deep | `populate=a-relation-name`| [Populate 1 level deep for specific relations](/cms/api/rest/guides/understanding-populate#populate-1-level-deep-for-specific-relations) |
-| Populate several relations,<br/>1 level deep | `populate[0]=relation-name&populate[1]=another-relation-name&populate[2]=yet-another-relation-name`| [Populate 1 level deep for specific relations](/cms/api/rest/guides/understanding-populate#populate-1-level-deep-for-specific-relations) |
+| Populate one relation,1 level deep | `populate=a-relation-name`| [Populate 1 level deep for specific relations](/cms/api/rest/guides/understanding-populate#populate-1-level-deep-for-specific-relations) |
+| Populate several relations,1 level deep | `populate[0]=relation-name&populate[1]=another-relation-name&populate[2]=yet-another-relation-name`| [Populate 1 level deep for specific relations](/cms/api/rest/guides/understanding-populate#populate-1-level-deep-for-specific-relations) |
 | Populate some relations, several levels deep | `populate[root-relation-name][populate][0]=nested-relation-name`| [Populate several levels deep for specific relations](/cms/api/rest/guides/understanding-populate#populate-several-levels-deep-for-specific-relations) |
 | Populate a component | `populate[0]=component-name`| [Populate components](/cms/api/rest/guides/understanding-populate#populate-components) |
 | Populate a component and one of its nested components | `populate[0]=component-name&populate[1]=component-name.nested-component-name`| [Populate components](/cms/api/rest/guides/understanding-populate#populate-components) |
@@ -167,17 +166,17 @@ The population and pagination operators cannot be combined.
 
 `fields` and `populate` can be combined.
 
-<ApiCall noSideBySide>
-<Request title="Example request">
+
+
 
 `GET /api/articles?fields[0]=title&fields[1]=slug&populate[headerImage][fields][0]=name&populate[headerImage][fields][1]=url`
 
-</Request>
 
-<details>
-<summary><QsForQueryTitle/></summary>
 
-<QsForQueryBody />
+
+
+
+
 
 ```js
 const qs = require('qs');
@@ -198,9 +197,9 @@ const query = qs.stringify(
 await request(`/api/articles?${query}`);
 ```
 
-</details>
 
-<Response title="Example response">
+
+
 
 ```json
 {
@@ -224,25 +223,25 @@ await request(`/api/articles?${query}`);
 }
 ```
 
-</Response>
-</ApiCall>
+
+
 
 
 #### Populate with filtering
 
 `filters` and `populate` can be combined.
 
-<ApiCall noSideBySide>
-<Request title="Example request">
+
+
 
 `GET /api/articles?populate[categories][sort][0]=name%3Aasc&populate[categories][filters][name][$eq]=Cars`
 
-</Request>
 
-<details>
-<summary><QsForQueryTitle/></summary>
 
-<QsForQueryBody />
+
+
+
+
 
 ```js
 const qs = require('qs');
@@ -267,9 +266,9 @@ const query = qs.stringify(
 await request(`/api/articles?${query}`);
 ```
 
-</details>
 
-<Response title="Example response">
+
+
 
 ```json
 {
@@ -298,5 +297,5 @@ await request(`/api/articles?${query}`);
 }
 ```
 
-</Response>
-</ApiCall>
+
+
