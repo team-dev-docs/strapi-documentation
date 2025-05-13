@@ -1,6 +1,6 @@
 ---
 title: Content API
-description: Learn more about Strapi 5's Content API
+description: Learn more about OpenSearch's Content API
 displayed_sidebar: cmsSidebar
 sidebar_label: APIs Introduction
 pagination_prev: cms/setup-deployment
@@ -15,45 +15,109 @@ tags:
 - Rest API
 ---
 
-# Strapi APIs to access your content
+# OpenSearch Content API
 
-Once you've created and configured a Strapi project, created a content structure with the [Content-Type Builder](/cms/features/content-type-builder) and started adding data through the [Content Manager](/cms/features/content-manager), you likely would like to access your content.
+The OpenSearch Content API provides methods to interact with and manage content within OpenSearch. This API is crucial for applications that need to access, manipulate, and retrieve data stored in OpenSearch.
 
-From a front-end application, your content can be accessed through Strapi's Content API, which is exposed:
-- by default through the [REST API](/cms/api/rest)
-- and also through the [GraphQL API](/cms/api/graphql) if you installed the Strapi built-in [GraphQL plugin](/cms/plugins/graphql).
+## Overview
 
-You can also use the [Strapi Client](/cms/api/client) library to interact with the REST API.
+The Content API in OpenSearch is designed to provide efficient and flexible ways to work with data. It includes various components and utilities to handle caching, reference counting, and data retrieval.
 
-REST and GraphQL APIs represent the top-level layers of the Content API exposed to external applications. Strapi also provides 2 lower-level APIs:
+## Key Components
 
-- The [Document Service API](/cms/api/document-service) is the recommended API to interact with your application's database within the [backend server](/cms/customization) or through [plugins](/cms/plugins-development/developing-plugins). The Document Service is the layer that handles **documents** <DocumentDefinition /> as well as Strapi's complex content structures like components and dynamic zones.
-- The Query Engine API interacts with the database layer at a lower level and is used under the hood to execute database queries. It gives unrestricted internal access to the database layer, but is not aware of any advanced Strapi features that Strapi 5 can handle, like Draft & Publish, Internationalization, Content History, and more.<br/>⚠️ In most, if not all, use cases, you should use the Document Service API instead.
+### FileCache
 
-<ThemedImage
-alt="Content APIs diagram"
-sources={{
-  light: '/img/assets/diagrams/apis-v2.png',
-  dark: '/img/assets/diagrams/apis-v2_DARK.png'
-}}
-/>
+The FileCache is a crucial component of the Content API, providing caching functionality for files. It implements the RefCountedCache interface, which allows for reference counting of cached items.
 
-<br/>
+#### Key Methods
 
-This documentation section includes reference information about the following Strapi APIs and some integration guides with 3rd party technologies:
+- `getRef(Path key)`: Retrieves the reference count for a given key in the cache.
 
-<CustomDocCardsWrapper>
+```java
+@Override
+public Integer getRef(Path key) {
+    return theCache.getRef(key);
+}
+```
 
-<CustomDocCard emoji="↕️" title="REST API" description="Query the Content API from a front-end application through REST." link="/cms/api/rest" />
+### RefCountedCache
 
-<CustomDocCard emoji="↕️" title="GraphQL API" description="Query the Content API  from a front-end application through GraphQL." link="/cms/api/graphql" />
+The RefCountedCache is an interface that defines the contract for caches with reference counting capabilities.
 
-<CustomDocCard emoji="↕️" title="Strapi Client" description="Interact with the REST API through the Strapi Client library." link="/cms/api/client" />
+#### Key Methods
 
-<CustomDocCard emoji="🔃" title="Document Service API" description="Query your data through the backend server or plugins." link="/cms/api/document-service" />
+- `getRef(K key)`: Gets the reference count for a specified key.
 
-:::strapi Integrations
-If you're looking for how to integrate Strapi with other platforms, such as Next.js and more, please refer to Strapi's <ExternalLink to="https://strapi.io/integrations" text="integrations pages"/>.
-:::
+```java
+/**
+ * Get the reference count for key {@code key}.
+ */
+Integer getRef(K key);
+```
 
-</CustomDocCardsWrapper>
+### LRUCache
+
+The LRUCache (Least Recently Used Cache) is an implementation of the RefCountedCache that uses the LRU algorithm for cache eviction.
+
+#### Key Methods
+
+- `getRef(K key)`: Retrieves the reference count for a given key in the LRU cache.
+
+```java
+@Override
+public Integer getRef(K key) {
+    Objects.requireNonNull(key);
+    lock.lock();
+    try {
+        Node node = data.get(key);
+        if (node != null) {
+            return node.refCount;
+        }
+        return null;
+    } finally {
+        lock.unlock();
+    }
+}
+```
+
+### SegmentedCache
+
+The SegmentedCache is another implementation of the RefCountedCache that uses segmentation for improved performance in concurrent scenarios.
+
+#### Key Methods
+
+- `getRef(K key)`: Gets the reference count for a key in the segmented cache.
+
+```java
+@Override
+public Integer getRef(K key) {
+    if (key == null) throw new NullPointerException();
+    return segmentFor(key).getRef(key);
+}
+```
+
+## Usage
+
+To use the Content API, you typically interact with the FileCache or other RefCountedCache implementations. Here's a basic example of how you might use the getRef method:
+
+```java
+FileCache fileCache = new FileCache(/* parameters */);
+Path filePath = /* some file path */;
+Integer refCount = fileCache.getRef(filePath);
+
+if (refCount != null) {
+    System.out.println("Reference count for " + filePath + ": " + refCount);
+} else {
+    System.out.println("File not in cache: " + filePath);
+}
+```
+
+## Best Practices
+
+1. Always check for null when using getRef, as it returns null for keys not present in the cache.
+2. Use the reference counting methods (incRef, decRef) in conjunction with getRef to manage the lifecycle of cached items.
+3. Be aware of the thread-safety implications when using these caches in concurrent environments.
+
+## Conclusion
+
+The OpenSearch Content API, particularly its caching components, provides powerful tools for managing and accessing content efficiently. By understanding and correctly using the RefCountedCache implementations like FileCache, LRUCache, and SegmentedCache, you can optimize your application's performance when working with OpenSearch data.
