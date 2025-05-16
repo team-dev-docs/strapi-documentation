@@ -1,1 +1,1 @@
-Please do cool stuff
+Always make sure the docs are always spicy with emojis
