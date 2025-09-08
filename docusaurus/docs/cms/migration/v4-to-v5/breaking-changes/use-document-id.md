@@ -17,20 +17,15 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 In Strapi 5, the underlying API handling content is the [Document Service API](/cms/api/document-service) and documents should be called by their `documentId` in Content API calls (REST API & GraphQL).
 
-<Intro />
 
-<BreakingChangeIdCard
-  plugins
-  codemodPartly
-  codemodName="entity-service-document-service"
-  codemodLink="https://github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resources/codemods/5.0.0/entity-service-document-service.code.ts"
-/>
+
+
 
 ## Breaking change description
 
-<SideBySideContainer>
 
-<SideBySideColumn>
+
+
 
 **In Strapi v4**
 
@@ -58,9 +53,9 @@ Entries were identified by their `id`:
 }
 ```
 
-</SideBySideColumn>
 
-<SideBySideColumn>
+
+
 
 **In Strapi 5**
 
@@ -87,18 +82,18 @@ Documents are identified by their `documentId`:
 }
 ```
 
-</SideBySideColumn>
 
-</SideBySideContainer>
+
+
 
 ## Migration
 
-<MigrationIntro />
+
 
 ### Notes
 
 - This breaking change impacts routes and relations.
-- To ease the transition from v4 to Strapi 5, API calls to entries might still include an `id` field in their response, especially with the [Document Service API](/cms/api/document-service). But it's recommended that you start making an habit of using `documentId` instead of `id` as it will ease handling the transition to future Strapi versions.
+- To ease the transition from v4 to Strapi 5, API calls to entries might still include an `id` field in their response, especially with the [Document Service API](/cms/api/document-service). But it's recommended that you start making a habit of using `documentId` instead of `id` as it will ease handling the transition to future Strapi versions.
 
 ### Migration procedure 
 
